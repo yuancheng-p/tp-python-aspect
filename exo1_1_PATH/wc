@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "hello, things that you should know about:"
+exec /usr/bin/wc $*
