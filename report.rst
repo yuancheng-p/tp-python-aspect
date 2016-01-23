@@ -159,9 +159,104 @@ Now, if we run the ``hello`` program again, we will get more stuff printed than 
 
 Great, again, we have sucessfully injected code into a C program.
 
-Python Decorator
+Python decorator
 ----------------
 
+A Python decorator is a function or class that takes a function as a parameter
+and returns another function. Let's use this to do some fun experiments.
+
+**decorator function**
+
+Let's print the trace stack before calling a function::
+
+  import traceback
+
+  def tbdecorator(fn):
+      def wrapper():
+          traceback.print_stack()
+          return fn()
+      return wrapper
+
+  @tbdecorator
+  def foo():
+      print("hello foo")
+
+  def toto():
+      foo()
+
+  if __name__ == "__main__":
+      toto()
+
+Save the above script into ``decorator.py`` and run it::
+
+  $> python3 decorator.py
+    File "decorator.py", line 17, in <module>
+      toto()
+    File "decorator.py", line 14, in toto
+      foo()
+    File "decorator.py", line 5, in wrapper
+      traceback.print_stack()
+  hello foo
+
+
+**class decorator**
+
+Let's do the same thing but using class decorator. Moreover, we print the stack only
+if the stack contains a function called ``bar()``::
+
+  import traceback
+
+  class mydecorator(object):
+      def __init__(self, arg):
+          self.arg = arg
+
+      def __call__(self, fn):
+          def wrapper(arg):
+              print(self.arg)
+              for s in traceback.extract_stack():
+                  if (s[3] == 'bar()' ):
+                      print("function bar() found!")
+                      traceback.print_stack()
+              return fn(arg)
+          return wrapper
+
+  @mydecorator("arg of decorator")
+  def foo(arg):
+      print("foo:" + arg)
+
+  def bar():
+      print("bar() is called")
+      foo("hihi")
+
+  if __name__ == "__main__":
+      bar()
+
+Save it as ``decorator_class.py``, and run it::
+
+  $> python3 decorator_class.py
+  bar() is called
+  arg of decorator
+  function bar() found!
+    File "decorator_class.py", line 30, in <module>
+      bar()
+    File "decorator_class.py", line 26, in bar
+      foo("hihi")
+    File "decorator_class.py", line 14, in wrapper
+      traceback.print_stack()
+  foo:hihi
+
+
+Some highlights about the decorators:
+
+1. To apply an action to a function, it's sufficient to declare a declarator
+before the function's signature.
+
+2. By using class decorator, we can pass additional arguments.
+
+3. By parsing and analysing the trace stack inside a decorator, we can
+apply different actions to different functions.
+
+Therefore, Python's decorator can be a tool for aspect oriented programming.
 
 
 Python's Introspection
@@ -169,7 +264,6 @@ Python's Introspection
 
 dir() & globals()
 -----------------
-
 
 isinstance() & type
 -------------------
