@@ -6,7 +6,7 @@ PATH
 
 ``wc`` allows us to count the number of lines of a file.
 
-let's try to create a text file named ``test_file.txt`` with the content::
+let's try to create a text file named `test_file.txt <exo1_1_PATH/test_file.txt>`_ with the content::
 
   this
   is
@@ -27,7 +27,7 @@ Let's checkout the absolote path of this command::
   $> which wc
   /usr/bin/wc
 
-Let's create our own script named ``wc`` and put this command inside.
+Let's create our own script named `wc <exo1_1_PATH/wc>`_ and put this command inside.
 Meanwhile, say hello before executing the command::
 
   #!/bin/sh
@@ -42,7 +42,7 @@ Run it::
 
 **Something fun**
 
-Let's create another script named ``hello_wc``, in which we modify our PATH
+Let's create another script named `hello_wc <exo1_1_PATH/hello_wc>`_, in which we modify our PATH
 before running the command ``wc``::
 
   #!/bin/sh
@@ -67,7 +67,7 @@ LD_PRELOAD
 In this section, we are going to show how to replace a C standard function
 with our own implementation of that function by using ``LD_PRELOAD`` variable.
 
-Let's create a hello world ``hello.c``::
+Let's create a hello world `hello.c <exo1_2_LD_PRELOAD/hello.c>`_ ::
 
   #include <stdio.h>
 
@@ -124,7 +124,8 @@ One of the undefined function we called (with flag ``U``) is ``puts@@GLIBC_2.2.5
 which is called by ``printf`` function.
 This function will be loaded dynamically when running the program.
 
-Let's create a file named ``myiolib.c`` in which we define our own ``puts`` function::
+
+Let's create a file named `myiolib.c <exo1_2_LD_PRELOAD/myiolib.c>`_ in which we define our own ``puts`` function::
 
   #include <unistd.h>
   #include <string.h>
@@ -162,7 +163,7 @@ and returns another function. Let's use this to do some fun experiments.
 
 **decorator function**
 
-Let's print the trace stack before calling a function::
+Let's write a `decorator.py <exo1_3_decorator/decorator.py>`_ that print the trace stack before calling a function::
 
   import traceback
 
@@ -182,7 +183,7 @@ Let's print the trace stack before calling a function::
   if __name__ == "__main__":
       toto()
 
-Save the above script into ``decorator.py`` and run it::
+Run it::
 
   $> python decorator.py
     File "decorator.py", line 17, in <module>
@@ -196,7 +197,7 @@ Save the above script into ``decorator.py`` and run it::
 
 **class decorator**
 
-Let's do the same thing but using class decorator. Moreover, we print the stack only
+Let's do the same thing but using `class decorator <exo1_3_decorator/decorator_class.py>`_. Moreover, we print the stack only
 if the stack contains a function called ``bar()``::
 
   import traceback
@@ -226,7 +227,7 @@ if the stack contains a function called ``bar()``::
   if __name__ == "__main__":
       bar()
 
-Save it as ``decorator_class.py``, and run it::
+Run it::
 
   $> python decorator_class.py
   bar() is called
@@ -257,4 +258,4 @@ apply different actions to different functions.
 Therefore, Python's decorator can be a tool for aspect oriented programming.
 
 
-Next section: `Python's Introspection <ch2_python_introspection.rst>`_
+`Next section: Python's Introspection <ch2_python_introspection.rst>`_
