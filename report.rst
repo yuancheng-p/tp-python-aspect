@@ -428,7 +428,7 @@ ast.parse(...) and eval(...) of the ast module
 Dynamic compilation
 -------------------
 
-ast.parse() can parse a Python source into an AST node.
+``ast.parse()`` can parse a Python source into an AST node.
 Let's write a script that parses source read from terminal,
 then we print the AST, and the formated source code using ``unparse.py``::
 
@@ -460,6 +460,60 @@ save it as ``dynamic_compile.py`` and run it::
 Modification of an AST
 ----------------------
 
+The AST returned by ``ast.parse()`` can be modified, thus here we have is another way to
+inject (or even modify) the origin code.
+
+Let's write a class that capitalize all the constant strings of a Python program by using ``ast.NodeTransformer``::
+
+  import sys
+  import ast
+  from unparse import Unparser
+
+  SOURCE = """
+  def foo():
+      print "hello", "world"
+
+  foo()
+  """
+
+  class Capitalizer(ast.NodeTransformer):
+
+      def visit_Str(self, node):
+          node.s = node.s.capitalize()
+          return node
+
+  if __name__ == "__main__":
+      print "---origin source---"
+      print SOURCE
+      tree = ast.parse(SOURCE)
+      Capitalizer().visit(tree)
+      print "---modified source---"
+      Unparser(tree, sys.stdout)
+      print
+      print "---run the new source---"
+      eval(compile(tree, "", "exec"))
+
+save it as ``capitalize.py`` and run::
+
+  $> python capitalize.py
+  ---origin source---
+
+  def foo():
+      print "hello", "world"
+
+  foo()
+
+  ---modified source---
+
+
+  def foo():
+      print 'Hello', 'World'
+  foo()
+  ---run the new source---
+  Hello World
+
+
 The 2nd Aspect Weaver
 ---------------------
+
 
