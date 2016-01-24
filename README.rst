@@ -14,3 +14,5 @@ There are 4 parts in this documentation:
 
 4. `Aspect Weaver with ast module <ch4_ast_aspect_weaver.rst>`_
 
+
+Authors: see `AUTHORS <AUTHORS.txt>`_
