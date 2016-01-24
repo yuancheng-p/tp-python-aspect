@@ -31,7 +31,7 @@ Firstely, let's start with some basic wrappers::
       return wrap
 
 These wrappers allows us to call some advice functions before, after, or around a join point function.
-Run the script ``aspect.py``::
+Run the script `aspect.py <exo3_aspect/aspect.py>`_::
 
   $> python aspect::
   advice:this is before_call test
@@ -104,7 +104,7 @@ if they satisfy the regular expression, then let's apply the advices to that fun
                       setattr(module, name, after_call(fn, advice_after))
 
 
-Let's run the script ``aspect_2.py``::
+Let's run the script `aspect_2.py <exo3_aspect/aspect_2.py>`_ ::
 
   === test 1 ===
   -- before calling compile
@@ -117,4 +117,4 @@ Let's run the script ``aspect_2.py``::
   bar:I'm not weaved:)
 
 
-Next section: `Aspect Weaver with ast module <ch4_ast_aspect_weaver.rst>`_
+`Next section: Aspect Weaver with ast module <ch4_ast_aspect_weaver.rst>`_

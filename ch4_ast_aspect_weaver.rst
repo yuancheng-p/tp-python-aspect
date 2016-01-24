@@ -23,7 +23,7 @@ then we print the AST, and the formated source code using ``unparse.py``::
       print
 
 
-save it as ``dynamic_compile.py`` and run it::
+save it as `dynamic_compile.py <exo4/dynamic_compile.py>`_ and run it::
 
   $> python dynamic_compile.py "def foo(): return 42"
   Module(body=[FunctionDef(name='foo', args=arguments(args=[], vararg=None, kwarg=None, defaults=[]), body=[Return(value=Num(n=42))], decorator_list=[])])
@@ -69,7 +69,7 @@ Let's write a class that capitalize all the constant strings of a Python program
       print "---run the new source---"
       eval(compile(tree, "", "exec"))
 
-save it as ``capitalize.py`` and run::
+save it as `capitalize.py <exo4/capitalize.py>`_ and run::
 
   $> python capitalize.py
   ---origin source---
@@ -140,8 +140,8 @@ we log down the functions invoked as single expressions::
           eval(compile(tree, "", "exec"))
 
 
-Save the code in ``ast_aspect.py``, before testing it,
-let's write a test file ``test.py``::
+Save the code in `ast_aspect.py <exo4/ast_aspect.py>`_, before testing it,
+let's write a test file `test.py <exo4/test.py>`_::
 
   def hello(arg):
       inner_fn('Good')

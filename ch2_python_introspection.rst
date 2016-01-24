@@ -71,7 +71,7 @@ do some extra work before running the function::
       wrap(foo, 1, 2, ["a", "b"], hi="hihi")
 
 
-save the code as ``wrapper.py`` and run it::
+save the code as `wrapper.py <exo2_python_introspection/wrapper.py>`_ and run it::
 
   $> python wrapper.py
   wrap is called with arguments:
@@ -107,7 +107,7 @@ a function and pass it to that function::
       foo(1, 2, ["a", "b"], hi="hihi")
 
 
-save it as `generic_decorator.pyt` and run::
+save it as `generic_decorator.py <exo2_python_introspection/generic_decorator.py>`_ and run::
 
   $> python generic_decorator.py
   wrap is called with arguments:
@@ -147,7 +147,7 @@ used as decorator, so lets rename it as ``fwrapp`` and test it::
       wrapped_foo(1, 2)
 
 
-save it as ``fwrap.py`` and run::
+save it as `fwrap.py <exo2_python_introspection/fwrap.py>` and run::
 
   $> python fwrap.py
   wrap is called with arguments:
@@ -159,4 +159,4 @@ save it as ``fwrap.py`` and run::
   **kwargs = {}
 
 
-Next section: `The 1st Aspect Weaver <ch3_first_aspect_weaver.rst>`_
+`Next section: The 1st Aspect Weaver <ch3_first_aspect_weaver.rst>`_
