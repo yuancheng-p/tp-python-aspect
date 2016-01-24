@@ -117,3 +117,4 @@ Let's run the script ``aspect_2.py``::
   bar:I'm not weaved:)
 
 
+Next section: `Aspect Weaver with ast module <ch4_ast_aspect_weaver.rst>`_

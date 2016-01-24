@@ -246,11 +246,15 @@ Some highlights about the decorators:
 1. To apply an action to a function, it's sufficient to declare a declarator
 before the function's signature.
 
+
 2. By using class decorator, we can pass additional arguments.
+
 
 3. By parsing and analysing the trace stack inside a decorator, we can
 apply different actions to different functions.
 
+
 Therefore, Python's decorator can be a tool for aspect oriented programming.
 
 
+Next section: `Python's Introspection <ch2_python_introspection.rst>`_

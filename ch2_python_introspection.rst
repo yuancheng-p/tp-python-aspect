@@ -157,3 +157,6 @@ save it as ``fwrap.py`` and run::
   x = 1, y = 2
   *args = ()
   **kwargs = {}
+
+
+Next section: `The 1st Aspect Weaver <ch3_first_aspect_weaver.rst>`_
