@@ -746,7 +746,7 @@ What would the expected output code be?
 To avoid this, we can directely change the function definition.
 In the body of a function definition, we insert a print expression at the beginning,
 then a print expression before the function ends, and before all the return statements.
-Here is an example code ``ast_aspect2.py``
+Here is an example code `ast_aspect2.py <exo4/ast_aspect2.py>`_
 
 Implementing aspect weaver using ``ast`` allows us have more control over the source code,
 however, it's also more difficult to code.
