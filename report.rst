@@ -422,12 +422,40 @@ save it as ``fwrap.py`` and run::
 The 1st Aspect Weaver
 =====================
 
-
 ast.parse(...) and eval(...) of the ast module
 ==============================================
 
 Dynamic compilation
 -------------------
+
+ast.parse() can parse a Python source into an AST node.
+Let's write a script that parses source read from terminal,
+then we print the AST, and the formated source code using ``unparse.py``::
+
+  import sys
+  import ast
+  from unparse import Unparser
+
+
+  if __name__ == "__main__":
+      if (len(sys.argv) < 2):
+          exit()
+
+      tree = ast.parse(sys.argv[1])
+      print ast.dump(tree)
+      Unparser(tree, sys.stdout)
+      print
+
+
+save it as ``dynamic_compile.py`` and run it::
+
+  $> python dynamic_compile.py "def foo(): return 42"
+  Module(body=[FunctionDef(name='foo', args=arguments(args=[], vararg=None, kwarg=None, defaults=[]), body=[Return(value=Num(n=42))], decorator_list=[])])
+
+
+  def foo():
+      return 42
+
 
 Modification of an AST
 ----------------------
