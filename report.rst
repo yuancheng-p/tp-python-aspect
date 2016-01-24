@@ -632,4 +632,121 @@ save it as ``capitalize.py`` and run::
 The 2nd Aspect Weaver
 ---------------------
 
+Let's write an other aspect weaver. It's interesting to log down the start and
+end of an invocation of functions a function.
 
+Let's firstly consider the simplest case:
+we log down the functions invoked as single expressions::
+
+  import sys
+  import ast
+  from unparse import Unparser
+  import os
+
+  class InvocationLogger(ast.NodeTransformer):
+
+      def visit_Expr(self, node):
+          if isinstance(node.value, ast.Call):
+              before_node, after_node = self.make_around_nodes(node.value.func.id, node.lineno, node.col_offset)
+              return [before_node, node, after_node]
+          return node
+
+      def make_around_nodes(self, fn_name, lineno, col_offset):
+          before_node  = ast.Print(dest=None, values=[ast.Str("--before call:" + fn_name,
+                  lineno=lineno, col_offset=col_offset)],
+                  nl=True, lineno=lineno, col_offset=col_offset)
+          after_node  = ast.Print(dest=None, values=[ast.Str("--after call:" + fn_name,
+                  lineno=lineno, col_offset=col_offset)],
+                  nl=True, lineno=lineno, col_offset=col_offset)
+          return before_node, after_node
+
+
+  if __name__ == "__main__":
+      if len(sys.argv) < 2:
+          print "usage: python {} <source_file>".format(sys.argv[0])
+          exit()
+
+      filename = sys.argv[1]
+      if (not os.path.exists(filename)):
+          print "'{}' does not exist!".format(filename)
+
+      with open(filename) as f:
+          tree = ast.parse(f.read())
+          InvocationLogger().visit(tree)
+          output_file = "logged_" + filename
+          with open(output_file, 'wb') as f_out:
+              Unparser(tree, f_out)
+              print "write generated code into {}".format(output_file)
+          eval(compile(tree, "", "exec"))
+
+
+Save the code in ``ast_aspect.py``, before testing it,
+let's write a test file ``test.py``::
+
+  def hello(arg):
+      inner_fn('Good')
+      print 'hello', arg
+
+  def inner_fn(arg):
+      print "inner function:", arg
+
+  if __name__ == "__main__":
+      hello("World!")
+
+
+Run this test::
+
+  $> python ast_aspect.py test.py
+  write generated code into logged_test.py
+  --before call:hello
+  --before call:inner_fn
+  inner function: Good
+  --after call:inner_fn
+  hello World!
+  --after call:hello
+
+And let's checkout the generated code::
+
+  $> cat logged_test.py
+
+
+  def hello(arg):
+      print '--before call:inner_fn'
+      inner_fn('Good')
+      print '--after call:inner_fn'
+      print 'hello', arg
+
+  def inner_fn(arg):
+      print 'inner function:', arg
+  if (__name__ == '__main__'):
+      print '--before call:hello'
+      hello('World!')
+      print '--after call:hello'
+
+
+Note that it's hard to log down all the function calls with this approch, we will need to
+consider all invocation cases to inject the code.
+For example, an assign operation may include a function call::
+
+  result = foo()
+
+
+the exepected output should then be::
+
+    print '--before call:foo'
+    result = foo('World!')
+    print '--after call:foo'
+
+another case that is even trickier::
+
+  result = foo() + foo()
+
+What would the expected output code be?
+
+To avoid this, we can directely change the function definition.
+In the body of a function definition, we insert a print expression at the beginning,
+then a print expression before the function ends, and before all the return statements.
+Here is an example code ``ast_aspect2.py``
+
+Implementing aspect weaver using ``ast`` allows us have more control over the source code,
+however, it's also more difficult to code.
