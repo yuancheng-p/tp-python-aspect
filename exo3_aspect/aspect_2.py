@@ -22,11 +22,19 @@ def around_call(join_point, advice_before, advice_after):
         return advice_after(join_point.__name__, *args, **kwargs)
     return wrap
 
-"""
-regex represent a top level module pattern,
-followed by a function pattern. ex: r're.*\.m.*'
-"""
 def weave(regex, advice_before=None, advice_after=None):
+    """
+    Apply the advices to the functions that matches the regular expression.
+
+    The regex contains 1 or 2 part.
+    * If it cannot be saparated by '\.', then it's considered as a top level
+    function pattern.
+    * Otherwise, the first part is considered as an already loaded top level module,
+    and the second part is a function pattern in that module.
+
+    For example, 'foo*' means all top level functions with a name started with 'foo',
+    're.*\.c.*' mease all functions started with 'c' of all modules started with 're'.
+    """
     if advice_before is None and advice_after is None:
         return  # nothing to do
 
