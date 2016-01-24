@@ -140,8 +140,8 @@ we log down the functions invoked as single expressions::
           eval(compile(tree, "", "exec"))
 
 
-Save the code in `ast_aspect.py <exo4/ast_aspect.py>`_, before testing it,
-let's write a test file `test.py <exo4/test.py>`_::
+Save the code in `ast_aspect.py <exo4/ast_aspect.py>`_,
+and let's write a test file `test.py <exo4/test.py>`_::
 
   def hello(arg):
       inner_fn('Good')
@@ -197,16 +197,18 @@ the exepected output should then be::
     result = foo('World!')
     print '--after call:foo'
 
-another case that is even trickier::
+another even trickier case::
 
   result = foo() + foo()
 
-What would the expected output code be?
+What would the expected output code be? We may need to consider all invocation cases,
+and produce different code for different case. Yes, we are writing a source to source compiler!
 
-To avoid this, we can directely change the function definition.
+Another approch to solve this problem is to change the function definition.
 In the body of a function definition, we insert a print expression at the beginning,
 then a print expression before the function ends, and before all the return statements.
-Here is an example code `ast_aspect2.py <exo4/ast_aspect2.py>`_
+Here is an example code `ast_aspect2.py <exo4/ast_aspect2.py>`_, in which we only add print message
+a message at the begining and at the end of the function body.
 
 Implementing aspect weaver using ``ast`` allows us have more control over the source code,
 however, it's also more difficult to code.

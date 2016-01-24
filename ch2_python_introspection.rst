@@ -5,7 +5,7 @@ dir() & globals()
 -----------------
 
 ``globals()`` returns the dictionary containing the current scope's global variables.
-``dirs()`` returns the names in the current scope, if called without an argument.
+``dir()`` returns the names in the current scope, if called without an argument.
 
 If we define funcitons directely on a Python interpreter (for example ``ipython``),
 we can find that the function names can be found in the global variables.
@@ -132,7 +132,7 @@ used as decorator, so lets rename it as ``fwrapp`` and test it::
           print("wrap is called with arguments:")
           print ("*args = " + str(args))
           print ("**kwargs = " + str(kwargs))
-          fn(*args, **kwargs)
+          return fn(*args, **kwargs)
       return wrap
 
   def foo(x, y, *args, **kwargs):
@@ -147,7 +147,7 @@ used as decorator, so lets rename it as ``fwrapp`` and test it::
       wrapped_foo(1, 2)
 
 
-save it as `fwrap.py <exo2_python_introspection/fwrap.py>` and run::
+save it as `fwrap.py <exo2_python_introspection/fwrap.py>`_ and run::
 
   $> python fwrap.py
   wrap is called with arguments:

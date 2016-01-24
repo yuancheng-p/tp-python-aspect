@@ -3,7 +3,7 @@ def fwrap(fn):
         print("wrap is called with arguments:")
         print ("*args = " + str(args))
         print ("**kwargs = " + str(kwargs))
-        fn(*args, **kwargs)
+        return fn(*args, **kwargs)
     return wrap
 
 def foo(x, y, *args, **kwargs):
